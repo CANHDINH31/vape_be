@@ -18,4 +18,13 @@ module.exports = {
       throw error;
     }
   },
+
+  deleteProduct: async (req, res) => {
+    try {
+      await productModel.findOneAndDelete({ _id: req.params.id });
+      res.status(201).json("Xóa product thành công");
+    } catch (error) {
+      throw error;
+    }
+  },
 };
