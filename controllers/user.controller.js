@@ -51,16 +51,14 @@ module.exports = {
       let { ...body } = req.body;
       let user = await userModel
         .findOne({
-          phone: body.phone,
+          username: body.username,
           password: body.password,
         })
+        .populate("favourite")
         .select("-password");
 
       if (!user) {
-        throw new ErrorResponse(
-          404,
-          "Số điện thoại hoặc mật khẩu không chính xác"
-        );
+        throw new ErrorResponse(404, "Username hoặc mật khẩu không chính xác");
       }
       return res.status(200).json(user);
     } catch (error) {
