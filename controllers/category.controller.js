@@ -3,7 +3,7 @@ const categoryModel = require("../models/category.model");
 module.exports = {
   list: async (req, res) => {
     try {
-      const data = await categoryModel.find({});
+      const data = await categoryModel.find({}).populate("product");
       res.status(201).json(data);
     } catch (error) {
       throw error;
@@ -14,6 +14,22 @@ module.exports = {
     try {
       const data = await categoryModel.create(req.body);
       res.status(201).json(data);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  update: async (req, res) => {
+    try {
+      const data = await categoryModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          ...req.body,
+        },
+        { new: true }
+      );
+
+      return res.status(201).json(data);
     } catch (error) {
       throw error;
     }
