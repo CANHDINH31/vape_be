@@ -18,4 +18,13 @@ module.exports = {
       throw error;
     }
   },
+
+  deleteCategory: async (req, res) => {
+    try {
+      await categoryModel.findOneAndDelete({ _id: req.params.id });
+      res.status(201).json("Xóa category thành công");
+    } catch (error) {
+      throw error;
+    }
+  },
 };
