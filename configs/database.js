@@ -8,7 +8,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    let ad = await userModel.findOne({ phone: "0123456789" });
+    let ad = await userModel.findOne({ username: "admin" });
     if (!ad) {
       await userModel.create(configuration.ADMIN);
     }

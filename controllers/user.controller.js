@@ -92,11 +92,11 @@ module.exports = {
       let { ...body } = req.body;
 
       let user = await userModel.findOne({
-        phone: body.phone,
+        username: body.username,
       });
 
       if (user) {
-        throw new ErrorResponse(404, "Số điện thoại đã tồn tại");
+        throw new ErrorResponse(404, "Username đã tồn tại");
       }
 
       const data = await userModel.create(body);

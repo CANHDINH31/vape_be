@@ -7,7 +7,12 @@ const userSchema = mongoose.Schema(
       require: true,
     },
 
-    phone: {
+    username: {
+      type: String,
+      require: true,
+    },
+
+    name: {
       type: String,
       require: true,
     },
