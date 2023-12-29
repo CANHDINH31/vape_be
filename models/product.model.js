@@ -14,6 +14,10 @@ const productSchema = mongoose.Schema(
       type: Number,
     },
 
+    struct: {
+      type: String,
+    },
+
     description: {
       type: String,
     },

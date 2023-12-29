@@ -3,7 +3,10 @@ const categoryModel = require("../models/category.model");
 module.exports = {
   list: async (req, res) => {
     try {
-      const data = await categoryModel.find({}).populate("product");
+      const data = await categoryModel
+        .find({})
+        .sort({ createdAt: -1 })
+        .populate("product");
       res.status(201).json(data);
     } catch (error) {
       throw error;

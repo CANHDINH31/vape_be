@@ -4,7 +4,7 @@ const categoryModel = require("../models/category.model");
 module.exports = {
   list: async (req, res) => {
     try {
-      const data = await productModel.find({});
+      const data = await productModel.find({}).sort({ createdAt: -1 });
       res.status(201).json(data);
     } catch (error) {
       throw error;
