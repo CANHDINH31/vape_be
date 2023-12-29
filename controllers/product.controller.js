@@ -53,4 +53,13 @@ module.exports = {
       throw error;
     }
   },
+
+  getById: async (req, res) => {
+    try {
+      const data = await productModel.findOne({ _id: req.params.id });
+      res.status(201).json(data);
+    } catch (error) {
+      throw error;
+    }
+  },
 };
