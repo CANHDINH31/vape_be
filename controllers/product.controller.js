@@ -10,6 +10,22 @@ module.exports = {
     }
   },
 
+  update: async (req, res) => {
+    try {
+      const data = await productModel.findByIdAndUpdate(
+        req.params.id,
+        {
+          ...req.body,
+        },
+        { new: true }
+      );
+
+      res.status(201).json(data);
+    } catch (error) {
+      throw error;
+    }
+  },
+
   create: async (req, res) => {
     try {
       const data = await productModel.create(req.body);
