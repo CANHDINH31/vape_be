@@ -6,7 +6,7 @@ module.exports = {
     try {
       let user = await userModel
         .find({})
-        .populate("major")
+        .populate("favourite")
         .select(["-updatedAt", "-createdAt"])
         .sort({ createdAt: -1 });
       return res.status(200).json(user);
@@ -14,27 +14,7 @@ module.exports = {
       throw error;
     }
   },
-  listTeacherReview: async (req, res) => {
-    try {
-      const data = await userModel
-        .find({ major: req.params.id, role: 1 })
-        .populate("major");
-      res.status(201).json(data);
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  },
-  getListTeacher: async (req, res) => {
-    try {
-      let user = await userModel
-        .find({ role: { $in: [1, 2] } })
-        .populate("major");
-      return res.status(200).json(user);
-    } catch (error) {
-      throw error;
-    }
-  },
+
   findUser: async (req, res) => {
     try {
       let user = await userModel
@@ -105,29 +85,13 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      console.log(req.body);
-      const existManagement = await userModel.findOne({
-        role: 2,
-        major: req.body.major,
-      });
-
-      if (
-        existManagement?.username != req.body.username &&
-        req?.body?.role == 2
-      ) {
-        throw new ErrorResponse(
-          404,
-          `${existManagement?.name} hiện đang là trưởng môn của chuyên ngành này`
-        );
-      }
-
       await userModel.findByIdAndUpdate(req.params.id, {
         ...req.body,
       });
 
       const user = await userModel
         .findById(req.params.id)
-        .populate("major")
+        .populate("favourite")
         .select("-password");
       res.status(201).json(user);
     } catch (error) {
