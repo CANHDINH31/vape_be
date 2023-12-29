@@ -19,6 +19,25 @@ module.exports = {
     }
   },
 
+  addProduct: async (req, res) => {
+    try {
+      const { listId } = req.body;
+
+      const category = await categoryModel.findById(req.params.id);
+
+      const newProductIds = listId.filter(
+        (productId) => !category.product.includes(productId)
+      );
+      category.product = [...category.product, ...newProductIds];
+
+      const updatedCategory = await category.save();
+
+      res.status(201).json(updatedCategory);
+    } catch (error) {
+      throw error;
+    }
+  },
+
   deleteCategory: async (req, res) => {
     try {
       await categoryModel.findOneAndDelete({ _id: req.params.id });

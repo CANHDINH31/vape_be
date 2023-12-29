@@ -1,4 +1,5 @@
 const productModel = require("../models/product.model");
+const categoryModel = require("../models/category.model");
 
 module.exports = {
   list: async (req, res) => {
@@ -20,7 +21,7 @@ module.exports = {
         { new: true }
       );
 
-      res.status(201).json(data);
+      return res.status(201).json(data);
     } catch (error) {
       throw error;
     }
@@ -38,6 +39,15 @@ module.exports = {
   deleteProduct: async (req, res) => {
     try {
       await productModel.findOneAndDelete({ _id: req.params.id });
+      const categories = await categoryModel.find();
+      for (const category of categories) {
+        const listProduct = category?.product?.toString()?.split(",");
+
+        if (listProduct.includes(req.params.id)) {
+          category.product = listProduct.filter((id) => id !== req.params.id);
+          await category.save();
+        }
+      }
       res.status(201).json("Xóa product thành công");
     } catch (error) {
       throw error;
