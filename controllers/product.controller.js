@@ -11,6 +11,15 @@ module.exports = {
     }
   },
 
+  getTopView: async (req, res) => {
+    try {
+      const data = await productModel.find({}).sort({ views: -1 }).limit(6);
+      res.status(201).json(data);
+    } catch (error) {
+      throw error;
+    }
+  },
+
   update: async (req, res) => {
     try {
       const data = await productModel.findByIdAndUpdate(
@@ -18,6 +27,20 @@ module.exports = {
         {
           ...req.body,
         },
+        { new: true }
+      );
+
+      return res.status(201).json(data);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  addViews: async (req, res) => {
+    try {
+      const data = await productModel.findByIdAndUpdate(
+        req.params.id,
+        { $inc: { views: 1 } },
         { new: true }
       );
 

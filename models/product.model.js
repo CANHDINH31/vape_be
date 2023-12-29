@@ -14,6 +14,11 @@ const productSchema = mongoose.Schema(
       type: Number,
     },
 
+    views: {
+      type: Number,
+      default: 0,
+    },
+
     struct: {
       type: String,
     },
