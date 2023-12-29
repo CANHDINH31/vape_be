@@ -1,5 +1,6 @@
 const productModel = require("../models/product.model");
 const categoryModel = require("../models/category.model");
+const mongoose = require("mongoose");
 
 module.exports = {
   list: async (req, res) => {
@@ -7,6 +8,46 @@ module.exports = {
       const data = await productModel.find({}).sort({ createdAt: -1 });
       res.status(201).json(data);
     } catch (error) {
+      throw error;
+    }
+  },
+
+  related: async (req, res) => {
+    try {
+      const categories = await categoryModel
+        .find({
+          product: mongoose.Types.ObjectId(req.params.id),
+        })
+        .populate("product");
+
+      const arrProduct = [];
+      categories.map((i) => {
+        arrProduct.push([...i?.product]);
+      }, []);
+
+      const flatArrProduct = arrProduct.flat();
+
+      const relatedProduct = flatArrProduct.filter(
+        (i) => i?._id != req.params.id
+      );
+
+      const shuffleArray = (arr) => {
+        const shuffledArray = [...arr];
+
+        for (let i = shuffledArray?.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledArray[i], shuffledArray[j]] = [
+            shuffledArray[j],
+            shuffledArray[i],
+          ];
+        }
+
+        return shuffledArray;
+      };
+
+      return res.status(201).json(shuffleArray(relatedProduct));
+    } catch (error) {
+      console.log(error);
       throw error;
     }
   },
