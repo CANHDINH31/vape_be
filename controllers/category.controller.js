@@ -13,6 +13,19 @@ module.exports = {
     }
   },
 
+  listMenu: async (req, res) => {
+    try {
+      const data = await categoryModel
+        .find({})
+        .sort({ displayOrder: -1, createdAt: -1 })
+        .limit(4);
+
+      res.status(201).json(data);
+    } catch (error) {
+      throw error;
+    }
+  },
+
   getById: async (req, res) => {
     try {
       const data = await categoryModel
