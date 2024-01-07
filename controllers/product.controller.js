@@ -54,7 +54,7 @@ module.exports = {
 
   getTopView: async (req, res) => {
     try {
-      const data = await productModel.find({}).sort({ views: -1 }).limit(6);
+      const data = await productModel.find({}).sort({ views: -1 }).limit(8);
       res.status(201).json(data);
     } catch (error) {
       throw error;
