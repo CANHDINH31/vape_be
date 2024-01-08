@@ -7,6 +7,7 @@ module.exports = {
       let user = await userModel
         .find({})
         .populate("favourite")
+        .populate("cart.product")
         .select(["-updatedAt", "-createdAt"])
         .sort({ createdAt: -1 });
       return res.status(200).json(user);
@@ -35,6 +36,7 @@ module.exports = {
           password: body.password,
         })
         .populate("favourite")
+        .populate("cart.product")
         .select("-password");
 
       if (!user) {
@@ -83,6 +85,7 @@ module.exports = {
       throw error;
     }
   },
+
   update: async (req, res) => {
     try {
       await userModel.findByIdAndUpdate(req.params.id, {
@@ -92,6 +95,7 @@ module.exports = {
       const user = await userModel
         .findById(req.params.id)
         .populate("favourite")
+        .populate("cart.product")
         .select("-password");
       res.status(201).json(user);
     } catch (error) {
