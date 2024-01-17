@@ -13,13 +13,15 @@ module.exports = {
     }
   },
 
-  listMenu: async (req, res) => {
+  home: async (req, res) => {
     try {
       const data = await categoryModel
         .find({})
         .sort({ displayOrder: -1, createdAt: -1 })
-        .limit(4);
-
+        .populate({
+          path: "product",
+          options: { limit: 6 },
+        });
       res.status(201).json(data);
     } catch (error) {
       throw error;
