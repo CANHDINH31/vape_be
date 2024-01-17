@@ -37,6 +37,8 @@ module.exports = {
         (i) => i?._id != req.params.id
       );
 
+      const uniqueArray = [...new Set(relatedProduct)];
+
       const shuffleArray = (arr) => {
         const shuffledArray = [...arr];
 
@@ -51,7 +53,7 @@ module.exports = {
         return shuffledArray;
       };
 
-      return res.status(201).json(shuffleArray(relatedProduct));
+      return res.status(201).json(shuffleArray(uniqueArray));
     } catch (error) {
       console.log(error);
       throw error;
