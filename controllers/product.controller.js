@@ -5,7 +5,13 @@ const mongoose = require("mongoose");
 module.exports = {
   list: async (req, res) => {
     try {
-      const data = await productModel.find({}).sort({ createdAt: -1 });
+      let query = {};
+      query = {
+        ...(req?.query?.name && {
+          name: { $regex: req.query.name, $options: "i" },
+        }),
+      };
+      const data = await productModel.find(query).sort({ createdAt: -1 });
       res.status(201).json(data);
     } catch (error) {
       throw error;
