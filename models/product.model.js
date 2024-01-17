@@ -15,6 +15,10 @@ const productSchema = mongoose.Schema(
       type: Number,
     },
 
+    label: {
+      type: String,
+    },
+
     description: {
       type: String,
     },
