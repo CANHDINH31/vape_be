@@ -30,8 +30,9 @@ module.exports = {
 
   getById: async (req, res) => {
     try {
+      const listId = req?.params?.id?.split("-");
       const data = await categoryModel
-        .findOne({ _id: req.params.id })
+        .find({ _id: { $in: listId } })
         .populate("product");
       res.status(201).json(data);
     } catch (error) {
