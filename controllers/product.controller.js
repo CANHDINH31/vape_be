@@ -128,8 +128,15 @@ module.exports = {
 
   getById: async (req, res) => {
     try {
+      const categories = await categoryModel.find({
+        product: mongoose.Types.ObjectId(req.params.id),
+      });
+
+      const listCategory = categories?.map((e) => e?.name);
+
       const data = await productModel.findOne({ _id: req.params.id });
-      res.status(201).json(data);
+
+      res.status(201).json({ ...data.toObject(), listCategory });
     } catch (error) {
       throw error;
     }
