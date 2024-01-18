@@ -17,24 +17,19 @@ const userSchema = mongoose.Schema(
       require: true,
     },
 
+    phone: {
+      type: String,
+    },
+
+    address: {
+      type: String,
+    },
+
     // 0: user 1: admin
     role: {
       type: Number,
       default: 0,
     },
-
-    favourite: [{ type: mongoose.Schema.Types.ObjectId, ref: "product" }],
-
-    cart: [
-      {
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "product",
-        },
-        amount: { type: Number },
-        type: { type: String },
-      },
-    ],
   },
   {
     timestamps: true,

@@ -35,8 +35,6 @@ module.exports = {
           username: body.username,
           password: body.password,
         })
-        .populate("favourite")
-        .populate("cart.product")
         .select("-password");
 
       if (!user) {
