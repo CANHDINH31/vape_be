@@ -1,5 +1,6 @@
 const userModel = require("../models/user.model");
 const ErrorResponse = require("../helpers/ErrorResponse");
+const nodemailer = require("nodemailer");
 
 module.exports = {
   list: async (req, res) => {
@@ -41,6 +42,41 @@ module.exports = {
         throw new ErrorResponse(404, "Username hoặc mật khẩu không chính xác");
       }
       return res.status(200).json(user);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  lostPassword: async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await userModel.findOne({
+        email,
+      });
+
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: "akingvietnam@gmail.com",
+          pass: "wolvdaeobrvxnsjw",
+        },
+      });
+
+      if (user) {
+        await transporter.sendMail({
+          from: "akingvietnam@gmail.com",
+          to: user?.email,
+          subject: `JINVAPE - ĐỔI MẬT KHẨU`,
+          html: `<h1>THAY ĐỔI MẬT KHẨU</h1>
+          <p>click vào link sau để thay đổi mật khẩu: https://jinvape.com/reset-password/${user?._id}  </p>
+          `,
+        });
+      }
+
+      return res.status(200).json("Đã gởi mail thành công");
     } catch (error) {
       console.log(error);
       throw error;

@@ -26,7 +26,7 @@ module.exports = {
         secure: true,
         auth: {
           user: "akingvietnam@gmail.com",
-          pass: "akingvietnam@gmail.com",
+          pass: "wolvdaeobrvxnsjw",
         },
       });
 
@@ -40,7 +40,7 @@ module.exports = {
 
       await transporter.sendMail({
         from: "akingvietnam@gmail.com",
-        to: "dinhphamcanh@gmail.com",
+        to: "akingvietnam@gmail.com",
         subject: `JINVAPE - ĐƠN HÀNG MỚI`,
         html: `<h1>Đơn hàng JINVAPE</h1>
         <p>Mã đơn hàng: ${order?._id}</p>
