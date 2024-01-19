@@ -24,8 +24,8 @@ module.exports = {
         port: 465,
         secure: true,
         auth: {
-          user: "dinhphamcanh@gmail.com",
-          pass: "zimxlcsohmqvqmto",
+          user: "akingvietnam@gmail.com",
+          pass: "wolvdaeobrvxnsjw",
         },
       });
 
@@ -38,7 +38,7 @@ module.exports = {
       };
 
       await transporter.sendMail({
-        from: "dinhphamcanh@gmail.com",
+        from: "akingvietnam@gmail.com",
         to: "akingvietnam@gmail.com",
         subject: `JINVAPE - ĐƠN HÀNG MỚI`,
         html: `<h1>Đơn hàng JINVAPE</h1>
