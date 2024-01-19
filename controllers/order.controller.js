@@ -10,13 +10,14 @@ module.exports = {
         phone: data?.phone,
         address: data?.address,
         note: data?.note,
-        user: data?.user?._id,
+        ...(data?.user?._id && { user: data?.user?._id }),
         cart: data?.cart?.map((e) => ({
           product: e?.info?._id,
           amount: e?.amount,
           type: e?.type,
         })),
       };
+
       const order = await orderModel.create(payload);
 
       let transporter = nodemailer.createTransport({
@@ -25,7 +26,7 @@ module.exports = {
         secure: true,
         auth: {
           user: "akingvietnam@gmail.com",
-          pass: "wolvdaeobrvxnsjw",
+          pass: "akingvietnam@gmail.com",
         },
       });
 
@@ -39,7 +40,7 @@ module.exports = {
 
       await transporter.sendMail({
         from: "akingvietnam@gmail.com",
-        to: "akingvietnam@gmail.com",
+        to: "dinhphamcanh@gmail.com",
         subject: `JINVAPE - ĐƠN HÀNG MỚI`,
         html: `<h1>Đơn hàng JINVAPE</h1>
         <p>Mã đơn hàng: ${order?._id}</p>

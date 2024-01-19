@@ -20,13 +20,13 @@ module.exports = {
     try {
       let user = await userModel
         .findById(req.params.id)
-        .populate("major")
         .select(["-updatedAt", "-createdAt"]);
       return res.status(200).json(user);
     } catch (error) {
       throw error;
     }
   },
+
   login: async (req, res) => {
     try {
       let { ...body } = req.body;
@@ -46,6 +46,7 @@ module.exports = {
       throw error;
     }
   },
+
   loginGoogle: async (req, res) => {
     try {
       let { ...body } = req.body;
@@ -65,16 +66,27 @@ module.exports = {
       throw error;
     }
   },
+
   create: async (req, res) => {
     try {
       let { ...body } = req.body;
 
-      let user = await userModel.findOne({
+      const existUsername = await userModel.findOne({
         username: body.username,
       });
 
-      if (user) {
+      if (existUsername) {
         throw new ErrorResponse(404, "Username đã tồn tại");
+      }
+
+      const existEmail = await userModel.findOne({
+        email: body.email,
+      });
+
+      console.log(body.email, "email");
+
+      if (existEmail) {
+        throw new ErrorResponse(404, "Email đã tồn tại");
       }
 
       const data = await userModel.create(body);
@@ -90,11 +102,7 @@ module.exports = {
         ...req.body,
       });
 
-      const user = await userModel
-        .findById(req.params.id)
-        .populate("favourite")
-        .populate("cart.product")
-        .select("-password");
+      const user = await userModel.findById(req.params.id).select("-password");
       res.status(201).json(user);
     } catch (error) {
       throw error;
