@@ -100,7 +100,8 @@ module.exports = {
     try {
       const data = await orderModel
         .find({ user: req.params.id })
-        .populate("cart.product");
+        .populate("cart.product")
+        .sort({ createdAt: -1 });
       res.status(201).json(data);
     } catch (error) {
       console.log(error);
