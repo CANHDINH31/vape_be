@@ -95,4 +95,16 @@ module.exports = {
       throw error;
     }
   },
+
+  getByUserId: async (req, res) => {
+    try {
+      const data = await orderModel
+        .find({ user: req.params.id })
+        .populate("cart.product");
+      res.status(201).json(data);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
