@@ -7,12 +7,11 @@ module.exports = {
     try {
       let user = await userModel
         .find({})
-        .populate("favourite")
-        .populate("cart.product")
         .select(["-updatedAt", "-createdAt"])
         .sort({ createdAt: -1 });
       return res.status(200).json(user);
     } catch (error) {
+      console.log(error);
       throw error;
     }
   },
