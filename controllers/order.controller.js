@@ -2,6 +2,15 @@ const orderModel = require("../models/order.model");
 const nodemailer = require("nodemailer");
 
 module.exports = {
+  list: async (req, res) => {
+    try {
+      const data = await orderModel.find({}).sort({ createdAt: -1 });
+      res.status(201).json(data);
+    } catch (error) {
+      throw error;
+    }
+  },
+
   create: async (req, res) => {
     try {
       const data = req.body;
