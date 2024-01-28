@@ -4,7 +4,10 @@ const nodemailer = require("nodemailer");
 module.exports = {
   list: async (req, res) => {
     try {
-      const data = await orderModel.find({}).sort({ createdAt: -1 });
+      const data = await orderModel
+        .find({})
+        .sort({ createdAt: -1 })
+        .populate("cart.product");
       res.status(201).json(data);
     } catch (error) {
       throw error;
