@@ -120,4 +120,16 @@ module.exports = {
       throw error;
     }
   },
+
+  getById: async (req, res) => {
+    try {
+      let data = await orderModel
+        .findById(req.params.id)
+        .populate("cart.product");
+      return res.status(200).json(data);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
