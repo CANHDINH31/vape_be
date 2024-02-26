@@ -38,7 +38,10 @@ module.exports = {
         .select("-password");
 
       if (!user) {
-        throw new ErrorResponse(404, "Username hoặc mật khẩu không chính xác");
+        return res.status(200).json({
+          status: 400,
+          message: "Username hoặc mật khẩu không chính xác",
+        });
       }
       return res.status(200).json(user);
     } catch (error) {
@@ -111,17 +114,21 @@ module.exports = {
       });
 
       if (existUsername) {
-        throw new ErrorResponse(404, "Username đã tồn tại");
+        return res.status(200).json({
+          status: 400,
+          message: "Username đã tồn tại",
+        });
       }
 
       const existEmail = await userModel.findOne({
         email: body.email,
       });
 
-      console.log(body.email, "email");
-
       if (existEmail) {
-        throw new ErrorResponse(404, "Email đã tồn tại");
+        return res.status(200).json({
+          status: 400,
+          message: "Email đã tồn tại",
+        });
       }
 
       const data = await userModel.create(body);
