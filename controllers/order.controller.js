@@ -98,7 +98,7 @@ module.exports = {
             )
             .join("")}
             <tr>
-              <td style="border: 1px solid black; padding: 8px; font-weight:600" colspan="4">Tổng tiền</td>
+              <td style="border: 1px solid black; padding: 8px; font-weight:600" colspan="5">Tổng tiền</td>
               <td style="border: 1px solid black; padding: 8px; font-weight:600">${total()}</td>
             </tr>
         </table>
