@@ -26,7 +26,8 @@ module.exports = {
         cart: data?.cart?.map((e) => ({
           product: e?.info?._id,
           amount: e?.amount,
-          type: e?.type,
+          type1: e?.type1,
+          type2: e?.type2,
         })),
       };
 
@@ -64,7 +65,8 @@ module.exports = {
         <table style="border-collapse: collapse;">
           <tr>
             <th style="border: 1px solid black; padding: 8px;">Tên sản phẩm</th>
-            <th style="border: 1px solid black; padding: 8px;">Loại</th>
+            <th style="border: 1px solid black; padding: 8px;">Phân loại 1</th>
+            <th style="border: 1px solid black; padding: 8px;">Phân loại 2</th>
             <th style="border: 1px solid black; padding: 8px;">Giá</th>
             <th style="border: 1px solid black; padding: 8px;">Số lượng</th>
             <th style="border: 1px solid black; padding: 8px;">Thành tiền</th>
@@ -77,7 +79,10 @@ module.exports = {
               item?.info?.name
             }</td>
             <td style="border: 1px solid black; padding: 8px;">${
-              item?.type
+              item?.type1
+            }</td>
+            <td style="border: 1px solid black; padding: 8px;">${
+              item?.type2
             }</td>
             <td style="border: 1px solid black; padding: 8px;">${
               item?.info?.discountPrice
